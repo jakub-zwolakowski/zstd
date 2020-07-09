@@ -46,6 +46,8 @@ googletest/
 *.d
 *.vscode
 *.code-workspace
+
+# TIS-CI
 compile_commands.json
 .clangd
 *_config.json
