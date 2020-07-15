@@ -584,7 +584,12 @@ static size_t ZSTD_copyRawBlock(void* dst, size_t dstCapacity,
         RETURN_ERROR(dstBuffer_null, "");
     }
     RETURN_ERROR_IF(srcSize > dstCapacity, dstSize_tooSmall, "");
+#ifdef __TRUSTINSOFT_ANALYZER__
+    if(srcSize)
+        memcpy(dst, src, srcSize);
+#else
     memcpy(dst, src, srcSize);
+#endif
     return srcSize;
 }
 
@@ -1524,7 +1529,7 @@ static void ZSTD_DCtx_updateOversizedDuration(ZSTD_DStream* zds, size_t const ne
 {
     if (ZSTD_DCtx_isOverflow(zds, neededInBuffSize, neededOutBuffSize))
         zds->oversizedDuration++;
-    else 
+    else
         zds->oversizedDuration = 0;
 }
 
@@ -1731,7 +1736,7 @@ size_t ZSTD_decompressStream(ZSTD_DStream* zds, ZSTD_outBuffer* output, ZSTD_inB
 
                 {   int const tooSmall = (zds->inBuffSize < neededInBuffSize) || (zds->outBuffSize < neededOutBuffSize);
                     int const tooLarge = ZSTD_DCtx_isOversizedTooLong(zds);
-                    
+
                     if (tooSmall || tooLarge) {
                         size_t const bufferSize = neededInBuffSize + neededOutBuffSize;
                         DEBUGLOG(4, "inBuff  : from %u to %u",
