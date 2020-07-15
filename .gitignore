@@ -54,4 +54,6 @@ compile_commands.json
 *_variables.csv
 *_time.txt
 *_functions.csv
+*__vfs-tis-*.c
+*__vfs-tis-*.h
 *~
