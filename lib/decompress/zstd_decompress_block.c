@@ -614,7 +614,11 @@ HINT_INLINE void ZSTD_overlapCopy8(BYTE** op, BYTE const** ip, size_t offset) {
  *           The src buffer must be before the dst buffer.
  */
 static void ZSTD_safecopy(BYTE* op, BYTE* const oend_w, BYTE const* ip, ptrdiff_t length, ZSTD_overlap_e ovtype) {
+#ifdef __TRUSTINSOFT_ANALYZER__
+    ptrdiff_t diff = 8;
+#else
     ptrdiff_t const diff = op - ip;
+#endif
     BYTE* const oend = op + length;
 
     assert((ovtype == ZSTD_no_overlap && (diff <= -8 || diff >= 8 || op >= oend_w)) ||
