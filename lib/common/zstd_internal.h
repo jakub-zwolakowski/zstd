@@ -264,7 +264,11 @@ typedef enum {
 MEM_STATIC FORCE_INLINE_ATTR 
 void ZSTD_wildcopy(void* dst, const void* src, ptrdiff_t length, ZSTD_overlap_e const ovtype)
 {
+#ifdef __TRUSTINSOFT_ANALYZER__
+    ptrdiff_t diff = 8;
+#else
     ptrdiff_t diff = (BYTE*)dst - (const BYTE*)src;
+#endif
     const BYTE* ip = (const BYTE*)src;
     BYTE* op = (BYTE*)dst;
     BYTE* const oend = op + length;
