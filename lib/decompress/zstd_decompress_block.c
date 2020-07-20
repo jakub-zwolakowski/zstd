@@ -593,11 +593,19 @@ HINT_INLINE void ZSTD_overlapCopy8(BYTE** op, BYTE const** ip, size_t offset) {
         (*op)[3] = (*ip)[3];
         *ip += dec32table[offset];
         ZSTD_copy4(*op+4, *ip);
+    #ifdef __TRUSTINSOFT_ANALYZER__
+        *ip += 8;
+    #endif
         *ip -= sub2;
     } else {
         ZSTD_copy8(*op, *ip);
+    #ifdef __TRUSTINSOFT_ANALYZER__
+        *ip += 8;
+    #endif
     }
+#ifndef __TRUSTINSOFT_ANALYZER__
     *ip += 8;
+#endif
     *op += 8;
     assert(*op - *ip >= 8);
 }
