@@ -584,7 +584,12 @@ static size_t ZSTD_copyRawBlock(void* dst, size_t dstCapacity,
         RETURN_ERROR(dstBuffer_null, "");
     }
     RETURN_ERROR_IF(srcSize > dstCapacity, dstSize_tooSmall, "");
+#ifdef __TRUSTINSOFT_ANALYZER__
+    if(srcSize)
+        memcpy(dst, src, srcSize);
+#else
     memcpy(dst, src, srcSize);
+#endif
     return srcSize;
 }
 
