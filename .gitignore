@@ -46,5 +46,14 @@ googletest/
 *.d
 *.vscode
 *.code-workspace
+
+# TIS-CI
 compile_commands.json
 .clangd
+*_config.json
+*_variables.csv
+*_time.txt
+*_functions.csv
+*__vfs-tis-*.c
+*__vfs-tis-*.h
+*~
